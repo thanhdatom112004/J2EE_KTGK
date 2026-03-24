@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách bác sĩ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h1>Bệnh viện qlbv123</h1>
+        <div class="actions">
+            <a class="btn secondary" th:href="@{/courses}">Khóa học</a>
+            <a class="btn secondary" th:href="@{/enroll/my-appointments}">Lịch khám của tôi</a>
+            <a class="btn secondary" th:href="@{/register}">Đăng ký</a>
+            <a class="btn secondary" th:href="@{/login}">Đăng nhập</a>
+            <a class="btn" th:href="@{/admin/doctors}">Quản lý bác sĩ</a>
+        </div>
+    </header>
+
+    <h2>Danh sách bác sĩ</h2>
+    <form class="search-form" th:action="@{/home}" method="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="Tìm theo tên bác sĩ...">
+        <button type="submit" class="btn">Tìm kiếm</button>
+    </form>
+
+    <div class="grid">
+        <div class="card" th:each="doctor : ${doctorPage.content}">
+            <img th:src="${doctor.image}" alt="doctor">
+            <div class="card-content">
+                <h3 th:text="${doctor.name}"></h3>
+                <p><strong>Chuyên khoa:</strong> <span th:text="${doctor.specialty}"></span></p>
+                <p><strong>Khoa:</strong> <span th:text="${doctor.department != null ? doctor.department.name : 'Chưa cập nhật'}"></span></p>
+                <a class="btn small" th:href="@{'/enroll/' + ${doctor.id}}">Đặt lịch</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination" th:if="${doctorPage.totalPages > 1}">
+        <a th:if="${!doctorPage.first}" th:href="@{/home(page=${currentPage - 1}, keyword=${keyword})}">Trang trước</a>
+        <span th:each="i : ${#numbers.sequence(0, doctorPage.totalPages - 1)}">
+            <a th:href="@{/home(page=${i}, keyword=${keyword})}" th:text="${i + 1}" th:classappend="${i == currentPage} ? 'active'"></a>
+        </span>
+        <a th:if="${!doctorPage.last}" th:href="@{/home(page=${currentPage + 1}, keyword=${keyword})}">Trang sau</a>
+    </div>
+</div>
+</body>
+</html>

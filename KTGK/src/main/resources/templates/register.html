@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký bệnh nhân</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container narrow">
+    <h2>Đăng ký tài khoản bệnh nhân</h2>
+    <p th:if="${errorMessage}" class="error" th:text="${errorMessage}"></p>
+    <form th:action="@{/register}" th:object="${registerRequest}" method="post" class="form">
+        <label>Username</label>
+        <input type="text" th:field="*{username}" placeholder="Nhap username">
+        <small class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+
+        <label>Mật khẩu</label>
+        <input type="password" th:field="*{password}" placeholder="Nhap password">
+        <small class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+
+        <label>Email</label>
+        <input type="email" th:field="*{email}" placeholder="abc@gmail.com">
+        <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+
+        <button type="submit" class="btn">Đăng ký</button>
+    </form>
+    <a th:href="@{/home}">Về trang chủ</a>
+</div>
+</body>
+</html>

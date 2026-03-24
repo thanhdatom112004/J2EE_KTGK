@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý bác sĩ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <h2>CRUD Bác sĩ (ADMIN)</h2>
+        <div class="actions">
+            <a class="btn" th:href="@{/admin/doctors/create}">Thêm bác sĩ</a>
+            <a class="btn secondary" th:href="@{/home}">Trang chủ</a>
+        </div>
+    </header>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Tên</th>
+            <th>Chuyên khoa</th>
+            <th>Khoa</th>
+            <th>Hình</th>
+            <th>Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="doctor : ${doctors}">
+            <td th:text="${doctor.name}"></td>
+            <td th:text="${doctor.specialty}"></td>
+            <td th:text="${doctor.department != null ? doctor.department.name : 'Chưa cập nhật'}"></td>
+            <td>
+                <img class="thumb" th:src="${doctor.image}" alt="doctor">
+            </td>
+            <td class="actions">
+                <a class="btn small" th:href="@{'/admin/doctors/' + ${doctor.id} + '/edit'}">Sửa</a>
+                <form th:action="@{'/admin/doctors/' + ${doctor.id} + '/delete'}" method="post"
+                      onsubmit="return confirm('Bạn chắc chắn muốn xóa?')">
+                    <button type="submit" class="btn danger small">Xóa</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

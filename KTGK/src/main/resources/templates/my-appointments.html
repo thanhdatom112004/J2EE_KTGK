@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch khám của tôi</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <h2>Lịch khám của tôi</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Tên bác sĩ</th>
+            <th>Ngày khám</th>
+            <th>Khoa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(appointments)}">
+            <td colspan="3">Bạn chưa có lịch khám nào.</td>
+        </tr>
+        <tr th:each="a : ${appointments}">
+            <td th:text="${a.doctor.name}"></td>
+            <td th:text="${a.appointmentDate}"></td>
+            <td th:text="${a.doctor.department != null ? a.doctor.department.name : 'Chưa cập nhật'}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/home}">Về trang chủ</a>
+</div>
+</body>
+</html>

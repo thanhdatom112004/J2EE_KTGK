@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt lịch khám</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container narrow">
+    <h2>Đặt lịch khám</h2>
+    <p><strong>Bác sĩ:</strong> <span th:text="${doctor.name}"></span></p>
+    <p><strong>Khoa:</strong> <span th:text="${doctor.department != null ? doctor.department.name : 'Chưa cập nhật'}"></span></p>
+
+    <form th:action="@{'/enroll/' + ${doctor.id}}" th:object="${appointmentForm}" method="post" class="form">
+        <label>Ngày khám</label>
+        <input type="date" th:field="*{appointmentDate}">
+        <small class="error" th:if="${#fields.hasErrors('appointmentDate')}" th:errors="*{appointmentDate}"></small>
+        <button class="btn" type="submit">Xác nhận đặt lịch</button>
+    </form>
+    <a th:href="@{/home}">Về trang chủ</a>
+</div>
+</body>
+</html>

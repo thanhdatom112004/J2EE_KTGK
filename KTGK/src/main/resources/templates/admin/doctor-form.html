@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form bác sĩ</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container narrow">
+    <h2 th:text="${action == 'create' ? 'Thêm bác sĩ' : 'Cập nhật bác sĩ'}"></h2>
+    <form th:object="${doctorForm}"
+          th:action="${action == 'create'} ? @{/admin/doctors/create} : @{'/admin/doctors/' + ${doctorId} + '/edit'}"
+          method="post" class="form">
+        <label>Tên bác sĩ</label>
+        <input type="text" th:field="*{name}" placeholder="VD: BS. Nguyễn Văn An">
+        <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+
+        <label>Chuyên khoa</label>
+        <input type="text" th:field="*{specialty}" placeholder="VD: Tim mạch">
+        <small class="error" th:if="${#fields.hasErrors('specialty')}" th:errors="*{specialty}"></small>
+
+        <label>Hình ảnh (URL)</label>
+        <input type="text" th:field="*{image}" placeholder="https://...">
+
+        <label>Khoa</label>
+        <select th:field="*{departmentId}">
+            <option value="">-- Chọn khoa --</option>
+            <option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.name}"></option>
+        </select>
+        <small class="error" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}"></small>
+
+        <button class="btn" type="submit">Lưu</button>
+    </form>
+    <a th:href="@{/admin/doctors}">Quay lại danh sách</a>
+</div>
+</body>
+</html>
